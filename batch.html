@@ -3,12 +3,55 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="theme-color" content="#07070f"/>
+  <meta name="theme-color" content="#07070f" id="meta-theme-color"/>
   <title>Edu Prime PW Mod – Access All Free Batches 2026</title>
   <meta name="description" content="Edu Prime PW Mod – Access All Free Batches 2026. Unlock all Physics Wallah free batches, premium courses, live classes & test series. JEE, NEET, UPSC free access now."/>
   <meta name="keywords" content="PW Mod APK Free Download, PW App Free Batch, PW Free Courses, Physics Wallah Mod APK Latest Version, PW Live Classes Free"/>
   <link rel="icon" href="/Edu Prime /edu-prime.png"/>
   <link rel="stylesheet" href="batch.css"/>
+  <script>
+    /* ── Instant theme apply — no flash ── */
+    (function() {
+      var DARK_COLOR  = "#07070f";
+      var LIGHT_COLOR = "#f4f4f8";
+
+      function setThemeColorMeta(isLight) {
+        var meta = document.getElementById("meta-theme-color");
+        if (meta) meta.setAttribute("content", isLight ? LIGHT_COLOR : DARK_COLOR);
+      }
+
+      var saved = localStorage.getItem("ep_dark_mode");
+      var isLight;
+      if (saved !== null) {
+        isLight = saved === "0";
+      } else {
+        isLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+      }
+      if (isLight) document.documentElement.classList.add("light-mode");
+      setThemeColorMeta(isLight);
+
+      // Keep status-bar / address-bar color synced whenever theme changes
+      // (e.g. user toggles dark mode from Settings in another tab, or this tab).
+      window.addEventListener("storage", function (e) {
+        if (e.key === "ep_dark_mode") {
+          var nowLight = e.newValue === "0";
+          document.documentElement.classList.toggle("light-mode", nowLight);
+          setThemeColorMeta(nowLight);
+        }
+      });
+
+      // React to system theme change only when user hasn't set an explicit preference.
+      window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", function (e) {
+        if (localStorage.getItem("ep_dark_mode") === null) {
+          document.documentElement.classList.toggle("light-mode", e.matches);
+          setThemeColorMeta(e.matches);
+        }
+      });
+
+      // Expose so other scripts on this page (e.g. an in-page dark-mode switch) can call it.
+      window.__epSetThemeColor = setThemeColorMeta;
+    })();
+  </script>
 </head>
 <body>
 <div class="page-wrapper">

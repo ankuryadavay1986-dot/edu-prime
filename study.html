@@ -370,6 +370,19 @@
     .wa-delete-zone.active svg { transform: scale(1.15); }
     .wa-delete-label { font-size: 9px; color: #ef4444; font-family: 'DM Sans','Inter',sans-serif; font-weight: 600; letter-spacing: .3px; }
   </style>
+  <script>
+    /* ── Instant theme apply — no flash ── */
+    (function() {
+      var saved = localStorage.getItem("ep_dark_mode");
+      var isLight;
+      if (saved !== null) {
+        isLight = saved === "0";
+      } else {
+        isLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+      }
+      if (isLight) document.documentElement.classList.add("light-mode");
+    })();
+  </script>
 </head>
 <body>
 
@@ -452,12 +465,37 @@
 
 <script>
   (function(){
-    const meta = document.createElement('meta');
+    var DARK_COLOR  = '#07051a';
+    var LIGHT_COLOR = '#f5f3ff';
+
+    var meta = document.createElement('meta');
     meta.name = 'theme-color';
-    const dark = window.matchMedia('(prefers-color-scheme: dark)');
-    meta.content = dark.matches ? '#07051a' : '#f5f3ff';
+    meta.id = 'meta-theme-color';
     document.head.appendChild(meta);
-    dark.addEventListener('change', e => { meta.content = e.matches ? '#07051a' : '#f5f3ff'; });
+
+    function setThemeColorMeta(isLight) {
+      meta.content = isLight ? LIGHT_COLOR : DARK_COLOR;
+    }
+
+    function currentIsLight() {
+      var saved = localStorage.getItem('ep_dark_mode');
+      if (saved !== null) return saved === '0';
+      return window.matchMedia('(prefers-color-scheme: light)').matches;
+    }
+
+    setThemeColorMeta(currentIsLight());
+
+    window.addEventListener('ep-theme-change', function (e) {
+      setThemeColorMeta(!e.detail.dark);
+    });
+    window.addEventListener('storage', function (e) {
+      if (e.key === 'ep_dark_mode') setThemeColorMeta(e.newValue === '0');
+    });
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function (e) {
+      if (localStorage.getItem('ep_dark_mode') === null) setThemeColorMeta(e.matches);
+    });
+
+    window.__epSetThemeColor = setThemeColorMeta;
   })();
 </script>
 

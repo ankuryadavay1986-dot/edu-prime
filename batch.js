@@ -400,16 +400,20 @@ const SVG_CLOSE  = `<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2=
 
 function openSearch() {
   isSearchOpen = true;
-  headerTitle.style.display     = 'none';
-  searchContainer.style.display = 'flex';
+  headerTitle.classList.add('fade-out');
+  searchContainer.classList.add('open');
+  btnSearchToggle.classList.add('is-active');
   if (searchIcon) searchIcon.innerHTML = SVG_CLOSE;
   btnSearchToggle.setAttribute('aria-label', 'Close search');
-  searchInput.focus();
+  // Wait for the container to finish expanding before focusing,
+  // so the keyboard/caret doesn't jump in mid-animation.
+  setTimeout(() => searchInput.focus(), 200);
 }
 function closeSearch() {
   isSearchOpen = false;
-  headerTitle.style.display     = '';
-  searchContainer.style.display = 'none';
+  headerTitle.classList.remove('fade-out');
+  searchContainer.classList.remove('open');
+  btnSearchToggle.classList.remove('is-active');
   if (searchIcon) searchIcon.innerHTML = SVG_SEARCH;
   btnSearchToggle.setAttribute('aria-label', 'Open search');
   if (searchQuery) { searchInput.value = ''; searchQuery = ''; applyFiltersAndSearch(); }

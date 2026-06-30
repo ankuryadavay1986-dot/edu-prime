@@ -3,167 +3,25 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="theme-color" content="#0a0a0f"/>
+  <meta name="theme-color" content="#0a0a0f" id="meta-theme-color"/>
   <title>Settings — Edu Prime</title>
   <link rel="manifest" href="manifest.json"/>
   <link rel="stylesheet" href="style.css"/>
   <style>
-    /* ── Global Light Theme Fix ── */
-    body, .page-batch {
-      background: #f0eff8 !important;
-      color: #1a1730 !important;
-    }
-    .main-content {
-      background: #f0eff8 !important;
-    }
-    /* Section labels */
-    .section-label {
-      color: #6b7280 !important;
-      font-size: .7rem !important;
-      font-weight: 700 !important;
-      letter-spacing: .08em !important;
-      text-transform: uppercase !important;
-      margin-bottom: 10px !important;
-      margin-top: 4px !important;
-    }
-    /* List items */
-    .list-item {
-      background: #ffffff !important;
-      border: 1px solid #e5e3f0 !important;
-      border-radius: 14px !important;
-      color: #1a1730 !important;
-    }
-    .list-item-title {
-      color: #1a1730 !important;
-      font-weight: 600 !important;
-    }
-    .list-item-meta span {
-      color: #6b7280 !important;
-    }
-    .list-item-icon {
-      background: #f0eff8 !important;
-      border-radius: 10px !important;
-      color: #7c3aed !important;
-      width: 38px !important;
-      height: 38px !important;
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      flex-shrink: 0 !important;
-    }
-    .list-item-arrow {
-      color: #c4b5fd !important;
-    }
-    /* Page header */
-    .page-header {
-      background: #f0eff8 !important;
-      border-bottom: 1px solid #e5e3f0 !important;
-      color: #1a1730 !important;
-    }
-    .page-header-title {
-      color: #1a1730 !important;
-      font-weight: 700 !important;
-    }
-    .back-btn {
-      background: #ffffff !important;
-      border: 1px solid #e5e3f0 !important;
-      color: #1a1730 !important;
-      border-radius: 10px !important;
-    }
-    /* Bottom nav */
-    .bottom-nav {
-      background: #ffffff !important;
-      border-top: 1px solid #e5e3f0 !important;
-    }
-    .bn-item {
-      color: #9ca3af !important;
-    }
-    .bn-item.active {
-      color: #7c3aed !important;
-    }
-    /* Sidebar */
-    .sidebar {
-      background: #ffffff !important;
-      border-right: 1px solid #e5e3f0 !important;
-    }
-    .sidebar-brand {
-      color: #1a1730 !important;
-    }
-    .sidebar-nav a {
-      color: #4b5563 !important;
-    }
-    .sidebar-nav a.active {
-      color: #7c3aed !important;
-      background: #ede9fe !important;
-    }
-    /* Edit Profile Modal — fix dark labels */
-    .edit-profile-modal {
-      background: #ffffff !important;
-      border: 1px solid #e5e3f0 !important;
-    }
-    .auth-modal {
-      background: #ffffff !important;
-      border: 1px solid #e5e3f0 !important;
-    }
-    .auth-modal-title {
-      color: #1a1730 !important;
-    }
-    .auth-modal-sub {
-      color: #6b7280 !important;
-    }
-    .auth-form-label {
-      color: #4b5563 !important;
-    }
-    .auth-form-input {
-      background: #f9f8ff !important;
-      border: 1px solid #ddd6fe !important;
-      color: #1a1730 !important;
-    }
-    .auth-form-input::placeholder {
-      color: #a0aec0 !important;
-    }
-    .auth-form-input:focus {
-      border-color: #7c3aed !important;
-    }
-    .auth-tab {
-      color: #9ca3af !important;
-    }
-    .auth-tab.active {
-      color: #7c3aed !important;
-      border-bottom-color: #7c3aed !important;
-    }
-    .auth-tabs {
-      border-bottom-color: #e5e3f0 !important;
-    }
-    .auth-modal-close {
-      color: #9ca3af !important;
-    }
-    .auth-forgot {
-      color: #7c3aed !important;
-    }
-    /* Profile card light */
-    .profile-name {
-      color: #1a1730 !important;
-    }
-    .profile-email {
-      color: #6b7280 !important;
-    }
-    .profile-badge {
-      color: #7c3aed !important;
-      background: #ede9fe !important;
-      border-color: #c4b5fd !important;
-    }
-    /* Dark toggle label in sidebar */
-    .dark-toggle-label {
-      color: #4b5563 !important;
-    }
-
+    /* NOTE: page-specific theming relies entirely on style.css's
+       html.light-mode rules (driven by the saved ep_dark_mode
+       preference, falling back to the system theme). A hardcoded
+       "!important" light-theme block used to live here and
+       permanently forced light colors regardless of theme — removed
+       so dark/light actually switches correctly. The few classes
+       that block also styled (auth modal, list-item-icon, etc.) now
+       have proper html.light-mode rules added to style.css instead. */
     /* ── Profile Card ── */
     .profile-card {
       display: flex;
       align-items: center;
       gap: 16px;
-      background: var(--surface-1, #F1EFFF);
+      background: var(--bg-card);
       border: 1px solid var(--border-default, #2a2540);
       border-radius: 16px;
       padding: 18px 16px;
@@ -276,7 +134,7 @@
     }
     .auth-modal-overlay.show { display: flex; }
     .auth-modal {
-      background: var(--surface-1, #0f0d1a);
+      background: var(--bg-elevated);
       border: 1px solid var(--border-default, #2a2540);
       border-radius: 20px;
       padding: 28px 24px;
@@ -317,7 +175,7 @@
     .auth-tab.active { color: var(--violet-400, #a78bfa); border-bottom-color: var(--violet-500, #8b5cf6); }
     .auth-form-input {
       width: 100%;
-      background: var(--surface-2, #13111e);
+      background: var(--bg-card);
       border: 1px solid var(--border-default, #2a2540);
       border-radius: 10px;
       padding: 10px 14px;
@@ -395,7 +253,7 @@
 
     /* Edit Profile Modal */
     .edit-profile-modal {
-      background: var(--surface-1, #0f0d1a);
+      background: var(--bg-elevated);
       border: 1px solid var(--border-default, #2a2540);
       border-radius: 20px;
       padding: 28px 24px;
@@ -429,6 +287,47 @@
       object-fit: cover;
     }
   </style>
+  <script>
+    /* ── Instant theme apply — no flash ── */
+    (function() {
+      var DARK_COLOR  = "#0a0a0f";
+      var LIGHT_COLOR = "#f4f4f8";
+
+      function setThemeColorMeta(isLight) {
+        var meta = document.getElementById("meta-theme-color");
+        if (meta) meta.setAttribute("content", isLight ? LIGHT_COLOR : DARK_COLOR);
+      }
+
+      var saved = localStorage.getItem("ep_dark_mode");
+      var isLight;
+      if (saved !== null) {
+        isLight = saved === "0";
+      } else {
+        isLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+      }
+      if (isLight) document.documentElement.classList.add("light-mode");
+      setThemeColorMeta(isLight);
+
+      window.addEventListener("ep-theme-change", function (e) {
+        setThemeColorMeta(!e.detail.dark);
+      });
+      window.addEventListener("storage", function (e) {
+        if (e.key === "ep_dark_mode") {
+          var nowLight = e.newValue === "0";
+          document.documentElement.classList.toggle("light-mode", nowLight);
+          setThemeColorMeta(nowLight);
+        }
+      });
+      window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", function (e) {
+        if (localStorage.getItem("ep_dark_mode") === null) {
+          document.documentElement.classList.toggle("light-mode", e.matches);
+          setThemeColorMeta(e.matches);
+        }
+      });
+
+      window.__epSetThemeColor = setThemeColorMeta;
+    })();
+  </script>
 </head>
 <body class="page-batch">
 

@@ -4,13 +4,10 @@ import {
   onAuthStateChanged,
   signOut,
   updateProfile,
+  updatePassword,
   getSettings,
   doc, setDoc, getDoc, serverTimestamp
 } from './firebase.js';
-
-import {
-  updatePassword
-} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -100,9 +97,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.classList.toggle('light-mode', !on);
     if (darkToggle)        darkToggle.checked        = on;
     if (darkToggleSidebar) darkToggleSidebar.checked = on;
+    if (window.__epSetThemeColor) window.__epSetThemeColor(!on);
+    window.dispatchEvent(new CustomEvent('ep-theme-change', { detail: { dark: on } }));
   }
   const savedDark = localStorage.getItem(DARK_KEY);
-  applyDark(savedDark === null ? true : savedDark === '1');
+  // Use system preference if no user override saved
+  const systemDark = !window.matchMedia("(prefers-color-scheme: light)").matches;
+  applyDark(savedDark === null ? systemDark : savedDark === '1');
+  // Also listen for system changes when no preference saved
+  window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", e => {
+    if (localStorage.getItem(DARK_KEY) === null) applyDark(!e.matches);
+  });
 
   const onDarkChange = e => {
     const on = e.target.checked;

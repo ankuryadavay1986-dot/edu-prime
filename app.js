@@ -186,15 +186,35 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Dark mode
+  // ── Theme: system-aware + user override ──────────────────
   const darkToggle = document.getElementById("darkToggle");
-  const isDark = localStorage.getItem("ep_dark_mode") !== "0";
-  document.documentElement.classList.toggle("light-mode", !isDark);
-  if (darkToggle) darkToggle.checked = isDark;
-  darkToggle?.addEventListener("change", () => {
-    const d = darkToggle.checked;
-    localStorage.setItem("ep_dark_mode", d ? "1" : "0");
-    document.documentElement.classList.toggle("light-mode", !d);
+  function applyTheme(isDark) {
+    document.documentElement.classList.toggle("light-mode", !isDark);
+    if (darkToggle) darkToggle.checked = isDark;
+  }
+  // 1. Check user saved preference
+  const savedMode = localStorage.getItem("ep_dark_mode");
+  let isDark;
+  if (savedMode !== null) {
+    isDark = savedMode === "1";
+  } else {
+    // 2. No preference saved — use system preference
+    isDark = !window.matchMedia("(prefers-color-scheme: light)").matches;
+  }
+  applyTheme(isDark);
+  // 3. Listen for system theme changes (if no user override)
+  window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", e => {
+    if (localStorage.getItem("ep_dark_mode") === null) {
+      applyTheme(!e.matches);
+    }
   });
+  if (darkToggle) {
+    darkToggle.addEventListener("change", () => {
+      const d = darkToggle.checked;
+      localStorage.setItem("ep_dark_mode", d ? "1" : "0");
+      applyTheme(d);
+    });
+  }
 
   // ── Sidebar links ────────────────────────────────────────
   const ICONS = {

@@ -3,10 +3,51 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="theme-color" content="#0a0a0f"/>
+  <meta name="theme-color" content="#0a0a0f" id="meta-theme-color"/>
   <title>Edu Prime</title>
   <link rel="manifest" href="manifest.json"/>
   <link rel="stylesheet" href="style.css"/>
+  <script>
+    /* ── Instant theme apply — no flash ── */
+    (function() {
+      var DARK_COLOR  = "#0a0a0f";
+      var LIGHT_COLOR = "#f4f4f8";
+
+      function setThemeColorMeta(isLight) {
+        var meta = document.getElementById("meta-theme-color");
+        if (meta) meta.setAttribute("content", isLight ? LIGHT_COLOR : DARK_COLOR);
+      }
+
+      var saved = localStorage.getItem("ep_dark_mode");
+      var isLight;
+      if (saved !== null) {
+        isLight = saved === "0";
+      } else {
+        isLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+      }
+      if (isLight) document.documentElement.classList.add("light-mode");
+      setThemeColorMeta(isLight);
+
+      window.addEventListener("ep-theme-change", function (e) {
+        setThemeColorMeta(!e.detail.dark);
+      });
+      window.addEventListener("storage", function (e) {
+        if (e.key === "ep_dark_mode") {
+          var nowLight = e.newValue === "0";
+          document.documentElement.classList.toggle("light-mode", nowLight);
+          setThemeColorMeta(nowLight);
+        }
+      });
+      window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", function (e) {
+        if (localStorage.getItem("ep_dark_mode") === null) {
+          document.documentElement.classList.toggle("light-mode", e.matches);
+          setThemeColorMeta(e.matches);
+        }
+      });
+
+      window.__epSetThemeColor = setThemeColorMeta;
+    })();
+  </script>
 </head>
 <body class="page-home">
 
@@ -156,8 +197,7 @@
       var _isLocal = ["localhost","127.0.0.1","::1"].indexOf(location.hostname) !== -1;
       if (_isHttps || _isLocal) {
         window.addEventListener("load", function () {
-          var _base = location.pathname.substring(0, location.pathname.lastIndexOf("/") + 1);
-          navigator.serviceWorker.register(_base + "sw.js", { scope: _base })
+          navigator.serviceWorker.register("/sw.js", { scope: "/" })
             .then(function (r) { console.log("[PWA] SW ok:", r.scope); })
             .catch(function (e) { console.warn("[PWA] SW skipped:", e.message); });
         });

@@ -2,13 +2,15 @@
   "name": "Edu Prime",
   "short_name": "Edu Prime",
   "description": "Access all free batches, premium courses, live classes & test series. JEE, NEET, UPSC free access.",
-  "start_url": "/index.html",
-  "scope": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0a0a0f",
   "theme_color": "#0a0a0f",
-  "categories": ["education"],
+  "categories": [
+    "education"
+  ],
   "lang": "en",
   "icons": [
     {
@@ -72,29 +74,32 @@
       "purpose": "maskable"
     }
   ],
-  "screenshots": [
-    {
-      "src": "screenshots/screen1.png",
-      "sizes": "540x960",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Edu Prime Home"
-    }
-  ],
   "shortcuts": [
     {
       "name": "Batches",
       "short_name": "Batches",
       "description": "Browse all free batches",
       "url": "/batch.html",
-      "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [
+        {
+          "src": "icons/icon-96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "Settings",
       "short_name": "Settings",
       "description": "App settings",
       "url": "/settings.html",
-      "icons": [{ "src": "icons/icon-96.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [
+        {
+          "src": "icons/icon-96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
